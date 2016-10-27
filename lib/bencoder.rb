@@ -46,6 +46,7 @@ module Bencoder
 					end
 					return s
 				end
+				raise UnexpectedToken.new("'#{i.peek}', expected ':'")
 			end
 			if (i.peek == Literal::LIST)
 				i.next
@@ -70,7 +71,7 @@ module Bencoder
 		end  
 
 		raise UnexpectedToken.
-			new("'#{i.peek}', expected 'i', /[0-9]/, 'l', or 'd'")
+			new("'#{i.peek}', expected 'i', /[0-9]/, 'l', 'd', or 'e'")
 	end
 
 	module Literal

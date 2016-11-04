@@ -22,12 +22,38 @@ module Bencoder
 		end
 	end
 
-	def self.decode(str)
-		raise UnsupportedType.new(str.class) unless (str.instance_of? String)
-		parse(str.each_char)
+	def self.decode(obj)
+		if (obj.instance_of? String)
+			p = ProxyEnumerator.new(obj.each_char)
+			return parse(p)
+		elsif (obj.instance_of? Enumerator)
+			return parse(obj)
+		end
+		raise UnsupportedType.new(obj.class)
 	end
 
 	private
+
+	class ProxyEnumerator
+		attr_accessor :pos
+		def initialize(target)
+			@t = target
+			@pos = 0
+		end
+
+		def peek
+			@t.peek
+		end
+
+		def next
+			@pos += 1
+			@t.next
+		end
+
+		def method_missing(method_name, *args)
+			@t.send(method_name, *args)
+		end
+	end
 	
 	def self.parse(i)
 		begin
@@ -39,14 +65,16 @@ module Bencoder
 				end
 			elsif (i.peek.match(/[0-9]/))
 				sz = parse_int(i)
-				if (i.next == Literal::COLON)
+				if (i.peek == Literal::COLON)
+					i.next
 					s = ""
 					sz.times do
 						s += i.next
 					end
 					return s
 				end
-				raise UnexpectedToken.new("'#{i.peek}', expected ':'")
+				raise UnexpectedToken.
+					new("'#{i.peek}' at position #{i.pos}, expected ':'")
 			end
 			if (i.peek == Literal::LIST)
 				i.next
@@ -70,8 +98,8 @@ module Bencoder
 			raise UnexpectedEOS
 		end  
 
-		raise UnexpectedToken.
-			new("'#{i.peek}', expected 'i', /[0-9]/, 'l', 'd', or 'e'")
+		raise UnexpectedToken.new("'#{i.peek}' at position #{i.pos}, "\
+			"expected 'i', /[0-9]/, 'l', 'd', or 'e'")
 	end
 
 	module Literal

@@ -27,7 +27,8 @@ module Bencoder
 			p = ProxyEnumerator.new(obj.each_char)
 			return parse(p)
 		elsif (obj.instance_of? Enumerator)
-			return parse(obj)
+			p = ProxyEnumerator.new(obj)
+			return parse(p)
 		end
 		raise UnsupportedType.new(obj.class)
 	end

@@ -66,7 +66,11 @@ class TestBencoder < MiniTest::Test
 	def test_parsing
 		assert_equal("d6:object7:counter5:itemsld5:peachi4eed4:peari3eed5:applei12eeee",
 			Bencoder::encode({"object" => "counter", "items" => [{"peach" => 4}, {"pear" => 3}, {"apple" => 12}]}))
-	end	
+	end
+
+	def test_decode_accepts_enumerator
+		assert_equal(42, Bencoder::decode("i42e".each_char))
+	end
 
 	def test_raises_on_unsuported_type_decode
 		assert_raises Bencoder::UnsupportedType do

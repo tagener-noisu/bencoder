@@ -74,8 +74,8 @@ module Bencoder
 					end
 					return s
 				end
-				raise UnexpectedToken.
-					new("'#{i.peek}' at position #{i.pos}, expected ':'")
+				raise UnexpectedToken.new("'#{i.peek}' at "\
+					"position #{i.pos}, expected ':'")
 			end
 			if (i.peek == Literal::LIST)
 				i.next

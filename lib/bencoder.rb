@@ -1,9 +1,18 @@
 module Bencoder
+	# Base class for all other Errors
 	class Error < RuntimeError; end
-	class UnexpectedToken < Error; end
-	class UnexpectedEOS < Error; end
-	class UnsupportedType < Error; end
 
+	# Raised on syntax errors while parsing
+	class UnexpectedToken < Error; end
+
+	# Raised on unexpected end of the parsed string
+	class UnexpectedEOS < Error; end
+
+	class UnsupportedType < Error; end # TODO: replace whith ArgumentError
+
+	# Returns Bencode representation of the given object _obj_.
+	# Supported types are: *String*, *Symbol*, *Fixnum*, *Array*, *Hash*;
+	# raises *UnsupportedType* if called with an argument of other type.
 	def self.encode(obj)
 		if (obj.instance_of?(String) || obj.instance_of?(Symbol))
 			return "#{obj.length}:#{obj}"
@@ -22,6 +31,9 @@ module Bencoder
 		end
 	end
 
+	# Decodes Bencode string or char enumerator and returns plain object.
+	# Supported types are: *String*, *Enumerator*;
+	# raises *UnsupportedType* if called with an argument of other type.
 	def self.decode(obj)
 		if (obj.instance_of?(String))
 			p = CountingEnumerator.new(obj.each_char)
@@ -35,7 +47,7 @@ module Bencoder
 
 	private
 
-	class CountingEnumerator
+	class CountingEnumerator # :nodoc:
 		attr_accessor :pos
 		def initialize(target)
 			@t = target
@@ -103,7 +115,7 @@ module Bencoder
 			"expected 'i', /[0-9]/, 'l', 'd', or 'e'")
 	end
 
-	module Literal
+	module Literal # :nodoc:
 		EEND = 'e'
 		INT = 'i'
 		STRING_DELIM = ':'

@@ -37,7 +37,7 @@ class TestBencoder < MiniTest::Test
 					 Bencoder::decode("d3:objd3:fooi42eee"))
     end
 
-	def test_parsing
+	def test_decoding
 		assert_equal({"object" => "counter", "items" => [{"peach" => 4}, {"pear" => 3}, {"apple" => 12}]},
 					 Bencoder::decode("d6:object7:counter5:itemsld5:peachi4eed4:peari3eed5:applei12eeee"))
 	end
@@ -63,7 +63,7 @@ class TestBencoder < MiniTest::Test
 			Bencoder::encode(["foo", ["bar", "baz"]]))
 	end
 
-	def test_parsing
+	def test_encoding
 		assert_equal("d6:object7:counter5:itemsld5:peachi4eed4:peari3eed5:applei12eeee",
 			Bencoder::encode({"object" => "counter", "items" => [{"peach" => 4}, {"pear" => 3}, {"apple" => 12}]}))
 	end

@@ -7,6 +7,10 @@ task :install do
 	`gem install #{Dir.glob("bencoder*.gem").first} --verbose`
 end
 
+task :docs do
+	`rdoc README.md lib/*.rb`
+end
+
 Rake::TestTask.new(:test) do |t|
 	t.pattern = "test/*.rb"
 	t.warning = true

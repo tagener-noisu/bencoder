@@ -10,3 +10,5 @@ Ruby gem that provides abilities to encode/decode [Bencoded strings](https://en.
 ## Installation
 1. Download or clone
 2. Run `rake install`, or install manually with `gem build`/`gem install`
+3. Tests can be run with `rake test`
+4. Documentations can be created with `rake docs` or `rdoc lib/*.rb`

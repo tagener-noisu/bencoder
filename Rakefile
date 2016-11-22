@@ -1,3 +1,5 @@
+require 'rake/testtask'
+
 task default: [:test]
 
 task :install do
@@ -5,6 +7,7 @@ task :install do
 	`gem install #{Dir.glob("bencoder*.gem").first} --verbose`
 end
 
-task :test do
-	ruby "test/bencoder_test.rb"
+Rake::TestTask.new(:test) do |t|
+	t.pattern = "test/*.rb"
+	t.warning = true
 end

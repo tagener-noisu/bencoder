@@ -23,10 +23,10 @@ module Bencoder
 	end
 
 	def self.decode(obj)
-		if (obj.instance_of? String)
+		if (obj.instance_of?(String))
 			p = CountingEnumerator.new(obj.each_char)
 			return parse(p)
-		elsif (obj.instance_of? Enumerator)
+		elsif (obj.instance_of?(Enumerator))
 			p = CountingEnumerator.new(obj)
 			return parse(p)
 		end

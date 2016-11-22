@@ -24,10 +24,10 @@ module Bencoder
 
 	def self.decode(obj)
 		if (obj.instance_of? String)
-			p = ProxyEnumerator.new(obj.each_char)
+			p = CountingEnumerator.new(obj.each_char)
 			return parse(p)
 		elsif (obj.instance_of? Enumerator)
-			p = ProxyEnumerator.new(obj)
+			p = CountingEnumerator.new(obj)
 			return parse(p)
 		end
 		raise UnsupportedType.new(obj.class)
@@ -35,7 +35,7 @@ module Bencoder
 
 	private
 
-	class ProxyEnumerator
+	class CountingEnumerator
 		attr_accessor :pos
 		def initialize(target)
 			@t = target

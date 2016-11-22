@@ -66,7 +66,7 @@ module Bencoder
 				end
 			elsif (i.peek.match(/[0-9]/))
 				sz = parse_int(i)
-				if (i.peek == Literal::COLON)
+				if (i.peek == Literal::STRING_DELIM)
 					i.next
 					s = ""
 					sz.times do
@@ -106,7 +106,7 @@ module Bencoder
 	module Literal
 		EEND = 'e'
 		INT = 'i'
-		COLON = ':'
+		STRING_DELIM = ':'
 		LIST = 'l'
 		DICTIONARY = 'd'
 	end

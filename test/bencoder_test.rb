@@ -72,14 +72,14 @@ class TestBencoder < MiniTest::Test
 		assert_equal(42, Bencoder::decode("i42e".each_char))
 	end
 
-	def test_raises_on_unsuported_type_decode
-		assert_raises Bencoder::UnsupportedType do
+	def test_raises_argument_error_in_decode
+		assert_raises ArgumentError do
 			Bencoder.decode(/Freedom is slavery/)
 		end
 	end
 
-	def test_raises_on_unsuported_type_encode
-		assert_raises Bencoder::UnsupportedType do
+	def test_raises_argument_error_in_encode
+		assert_raises ArgumentError do
 			Bencoder.encode(/Ignorance is strength/)
 		end
 	end

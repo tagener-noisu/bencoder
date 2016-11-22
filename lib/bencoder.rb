@@ -8,11 +8,9 @@ module Bencoder
 	# Raised on unexpected end of the parsed string
 	class UnexpectedEOS < Error; end
 
-	class UnsupportedType < Error; end # TODO: replace whith ArgumentError
-
 	# Returns Bencode representation of the given object _obj_.
 	# Supported types are: *String*, *Symbol*, *Fixnum*, *Array*, *Hash*;
-	# raises *UnsupportedType* if called with an argument of other type.
+	# raises *ArgumentError* if called with an argument of other type.
 	def self.encode(obj)
 		if (obj.instance_of?(String) || obj.instance_of?(Symbol))
 			return "#{obj.length}:#{obj}"
@@ -27,13 +25,13 @@ module Bencoder
 			obj.each { |k, v| s += "#{encode(k)}#{encode(v)}" }
 			return s + "e"
 		else
-			raise UnsupportedType.new(obj.class)
+			raise ArgumentError.new("Unsupported type: #{obj.class}")
 		end
 	end
 
 	# Decodes Bencode string or char enumerator and returns plain object.
 	# Supported types are: *String*, *Enumerator*;
-	# raises *UnsupportedType* if called with an argument of other type.
+	# raises *ArgumentError* if called with an argument of other type.
 	def self.decode(obj)
 		if (obj.instance_of?(String))
 			p = CountingEnumerator.new(obj.each_char)
@@ -42,7 +40,7 @@ module Bencoder
 			p = CountingEnumerator.new(obj)
 			return parse(p)
 		end
-		raise UnsupportedType.new(obj.class)
+		raise ArgumentError.new("Unsupported type: #{obj.class}")
 	end
 
 	private

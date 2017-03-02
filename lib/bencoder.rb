@@ -65,12 +65,12 @@ module Bencoder
 			@t.send(method_name, *args)
 		end
 	end
-	
+
 	def self.parse(i)
 		begin
 			if (i.peek == Literal::INT)
 				i.next
-				num = parse_int(i) 
+				num = parse_int(i)
 				if (i.next == Literal::EEND)
 					return num
 				end
@@ -104,10 +104,10 @@ module Bencoder
 				end
 				i.next
 				return d
-			end 
+			end
 		rescue StopIteration
 			raise UnexpectedEOS
-		end  
+		end
 
 		raise UnexpectedToken.new("'#{i.peek}' at position #{i.pos}, "\
 			"expected 'i', /[0-9]/, 'l', 'd', or 'e'")

@@ -2,13 +2,13 @@ module Bencoder
 	# Base class for all other Errors
 	class Error < RuntimeError; end
 
-	# Raised on syntax errors while parsing
+	# Raised on syntax errors during the parsing
 	class UnexpectedToken < Error; end
 
-	# Raised on unexpected end of the parsed string
+	# Raised on an unexpected end of the parsed string
 	class UnexpectedEOS < Error; end
 
-	# Returns Bencode representation of the given object _obj_.
+	# Returns a Bencoded representation of the given object _obj_.
 	# Supported types are: *String*, *Symbol*, *Fixnum*, *Array*, *Hash*;
 	# raises *ArgumentError* if called with an argument of other type.
 	def self.encode(obj)
@@ -29,7 +29,7 @@ module Bencoder
 		end
 	end
 
-	# Decodes Bencode string or char enumerator and returns plain object.
+	# Decodes a Bencoded string or char enumerator and returns plain object.
 	# Supported types are: *String*, *Enumerator*;
 	# raises *ArgumentError* if called with an argument of other type.
 	def self.decode(obj)

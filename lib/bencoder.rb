@@ -74,7 +74,7 @@ module Bencoder
 				if (i.next == Literal::EEND)
 					return num
 				end
-			elsif (i.peek.match(/[0-9]/))
+			elsif ((c = i.peek) >= '0' && c <= '9')
 				sz = parse_int(i)
 				if (i.peek == Literal::STRING_DELIM)
 					i.next
@@ -123,9 +123,9 @@ module Bencoder
 
 	def self.parse_int(i)
 		s = ""
-		if (i.peek.match(/[0-9-]/))
+		if ((c = i.peek) == '-' || c >= '0' && c <= '9')
 			s += i.next
-			while (i.peek.match(/[0-9]/))
+			while ((c = i.peek) >= '0' && c <= '9')
 				s+= i.next
 			end
 		end

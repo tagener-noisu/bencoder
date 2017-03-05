@@ -38,8 +38,10 @@ class TestBencoder < MiniTest::Test
     end
 
 	def test_decoding
-		assert_equal({"object" => "counter", "items" => [{"peach" => 4}, {"pear" => 3}, {"apple" => 12}]},
-					 Bencoder::decode("d6:object7:counter5:itemsld5:peachi4eed4:peari3eed5:applei12eeee"))
+		assert_equal({
+			"object" => "counter",
+			"items" => [{"peach" => 4}, {"pear" => 3}, {"apple" => 12}]},
+		Bencoder::decode("d6:object7:counter5:itemsld5:peachi4eed4:peari3eed5:applei12eeee"))
 	end
 
 	def test_encoding_int
@@ -65,7 +67,9 @@ class TestBencoder < MiniTest::Test
 
 	def test_encoding
 		assert_equal("d6:object7:counter5:itemsld5:peachi4eed4:peari3eed5:applei12eeee",
-			Bencoder::encode({"object" => "counter", "items" => [{"peach" => 4}, {"pear" => 3}, {"apple" => 12}]}))
+			Bencoder::encode({
+				"object" => "counter",
+				"items" => [{"peach" => 4}, {"pear" => 3}, {"apple" => 12}]}))
 	end
 
 	def test_decode_accepts_enumerator

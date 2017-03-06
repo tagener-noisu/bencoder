@@ -5,6 +5,7 @@ class TestBencoder < MiniTest::Test
 	def test_parsing_integer
 		assert_equal(42, Bencoder::decode("i42e"))
 		assert_equal(-42, Bencoder::decode("i-42e"))
+		assert_equal(1234567890, Bencoder::decode("i1234567890e"))
 	end
 
 	def test_parsing_string

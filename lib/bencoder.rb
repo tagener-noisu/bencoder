@@ -105,6 +105,10 @@ module Bencoder
 				i.next
 				return d
 			end
+			if (i.peek == Literal::EEND)
+				raise UnexpectedToken.new("'#{i.peek}' at position #{i.pos}, "\
+				"expected 'i', /[0-9]/, 'l' or 'd'")
+			end
 		rescue StopIteration
 			raise UnexpectedEOS
 		end

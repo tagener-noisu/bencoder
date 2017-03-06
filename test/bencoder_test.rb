@@ -112,4 +112,11 @@ class TestBencoder < MiniTest::Test
 			Bencoder::decode("d3:foo3:bar")
 		end
 	end
+
+	def test_raises_on_unexpected_end_token
+		e = assert_raises Bencoder::UnexpectedToken do
+			Bencoder::decode("e")
+		end
+		assert(e.message.match(/expected 'i', \/\[0-9\]\/, 'l' or 'd'/))
+	end
 end

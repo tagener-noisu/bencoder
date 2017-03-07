@@ -62,7 +62,7 @@ class TestBencoder < MiniTest::Test
 	end
 
 	def test_encoding_nested_arrays
-		assert_equal("l3:fool3:bar3:bazee", 
+		assert_equal("l3:fool3:bar3:bazee",
 			Bencoder::encode(["foo", ["bar", "baz"]]))
 	end
 
@@ -99,6 +99,11 @@ class TestBencoder < MiniTest::Test
 		assert_raises Bencoder::UnexpectedEOS do
 			Bencoder::decode("i41")
 		end
+
+		e = assert_raises Bencoder::UnexpectedToken do
+			Bencoder::decode("i1337ae")
+		end
+		assert(e.message.match(/expected \/\[0-9\]\/ or 'e'/))
 	end
 
 	def test_raises_on_unclosed_list

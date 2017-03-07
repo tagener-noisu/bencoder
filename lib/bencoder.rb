@@ -71,9 +71,12 @@ module Bencoder
 			if (i.peek == Literal::INT)
 				i.next
 				num = parse_int(i)
-				if (i.next == Literal::EEND)
+				if (i.peek == Literal::EEND)
+					i.next
 					return num
 				end
+				raise UnexpectedToken.new("'#{i.peek}' at "\
+					"position #{i.pos}, expected /[0-9]/ or 'e'")
 			elsif ((c = i.peek) >= '0' && c <= '9')
 				sz = parse_int(i)
 				if (i.peek == Literal::STRING_DELIM)

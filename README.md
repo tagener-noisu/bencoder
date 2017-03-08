@@ -6,6 +6,7 @@ Ruby gem that provides abilities to encode/decode [Bencoded strings](https://en.
 2. `require "bencoder"`
 3. `Bencoder.decode("l3:foo3:bare") # => ["foo", "bar"]`
 4. `Bencoder.encode({year: 1984}) # => "d4:yeari1984ee"`
+5. You can parse torrent files with it; just don't forget to open them in a binary mode
 
 ## Installation
 1. Download or clone

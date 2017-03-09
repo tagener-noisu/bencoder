@@ -34,35 +34,34 @@ module Bencoder
 	# raises *ArgumentError* if called with an argument of other type.
 	def self.decode(obj)
 		if (obj.instance_of?(String))
-			p = CountingEnumerator.new(obj.each_char)
-			return parse(p)
+			i = obj.each_char
+			i.extend(CountingEnumerator)
+			return parse(i)
 		elsif (obj.instance_of?(Enumerator))
-			p = CountingEnumerator.new(obj)
-			return parse(p)
+			obj.extend(CountingEnumerator)
+			return parse(obj)
 		end
 		raise ArgumentError.new("Unsupported type: #{obj.class}")
 	end
 
 	private
 
-	class CountingEnumerator # :nodoc:
-		attr_accessor :pos
-		def initialize(target)
-			@t = target
-			@pos = 0
+	module CountingEnumerator # :nodoc:
+		def pos
+			@pos
 		end
 
-		def peek
-			@t.peek
-		end
-
-		def next
+		def next_
 			@pos += 1
-			@t.next
+			old_next
 		end
 
-		def method_missing(method_name, *args)
-			@t.send(method_name, *args)
+		def self.extended(to)
+			to.instance_exec {
+				alias :old_next :next
+				alias :next :next_
+				@pos = 0
+			}
 		end
 	end
 

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'bencoder'
-  s.version     = '0.2.1'
+  s.version     = '0.3.0'
   s.date        = '2017-03-22'
   s.summary     = "Bencoder"
   s.description = "A gem that provides abilities to encode/decode Bencode strings https://en.wikipedia.org/wiki/Bencode"

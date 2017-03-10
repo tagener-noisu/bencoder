@@ -12,6 +12,6 @@ task :docs do
 end
 
 Rake::TestTask.new(:test) do |t|
-	t.pattern = "test/*.rb"
+	t.pattern = "test/test_*.rb"
 	t.warning = true
 end

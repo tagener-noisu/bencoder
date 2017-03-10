@@ -103,6 +103,7 @@ class TestBencoder < MiniTest::Test
 		e = assert_raises Bencoder::UnexpectedToken do
 			Bencoder::decode("i1337ae")
 		end
+		assert(e.message.match(/at position 5/))
 		assert(e.message.match(/expected \/\[0-9\]\/ or 'e'/))
 	end
 
@@ -122,6 +123,7 @@ class TestBencoder < MiniTest::Test
 		e = assert_raises Bencoder::UnexpectedToken do
 			Bencoder::decode("e")
 		end
+		assert(e.message.match(/at position 0/))
 		assert(e.message.match(/expected 'i', \/\[0-9\]\/, 'l' or 'd'/))
 	end
 end

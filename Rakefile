@@ -8,7 +8,7 @@ task :install do
 end
 
 task :docs do
-	`rdoc README.md lib/*.rb`
+	`rdoc --markup markdown README.md lib/*.rb`
 end
 
 Rake::TestTask.new(:test) do |t|

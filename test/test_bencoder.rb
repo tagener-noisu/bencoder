@@ -1,6 +1,8 @@
 require_relative '../lib/bencoder.rb'
 require 'minitest/autorun'
 
+using Bencoder::MonkeyPatches
+
 class TestBencoder < MiniTest::Test
 	def test_parsing_integer
 		assert_equal(42, Bencoder::decode("i42e"))
@@ -125,5 +127,12 @@ class TestBencoder < MiniTest::Test
 		end
 		assert(e.message.match(/at position 0/))
 		assert(e.message.match(/expected 'i', \/\[0-9\]\/, 'l' or 'd'/))
+	end
+
+	def test_monkey_patches
+		assert_equal(1337.to_bencode, "i1337e")
+		assert_equal("Atlas".to_bencode, "5:Atlas")
+		assert_equal(Array.new.to_bencode, "le")
+		assert_equal(Hash.new.to_bencode, "de")
 	end
 end

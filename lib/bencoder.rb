@@ -44,6 +44,35 @@ module Bencoder
 		raise ArgumentError.new("Unsupported type: #{obj.class}")
 	end
 
+	# A module that holds monkey patches.
+	# You can activate them locally by `using MonkeyPatches`.
+	# Also contains method `apply` that extends only particular object.
+	module MonkeyPatches
+		# Adds method `to_bencode` to any given object.
+		# Useful only for objects accepted by Bencoder.encode.
+		# Example: `a = "hello"; Bencoder::MonkeyPatches.apply(a); a.to_bencode
+		# # => "5:hello"`
+		def self.apply(obj)
+			obj.extend(Bencodable)
+		end
+
+		[String, Symbol, Fixnum, Array, Hash].each { |c|
+			refine(c) {
+				def to_bencode
+					Bencoder::encode(self)
+				end
+			}
+		}
+
+		private
+
+		module Bencodable # :nodoc:
+			def to_bencode
+				Bencoder::encode(self)
+			end
+		end
+	end
+
 	private
 
 	module CountingEnumerator # :nodoc:

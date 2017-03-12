@@ -56,14 +56,6 @@ module Bencoder
 			obj.extend(Bencodable)
 		end
 
-		[String, Symbol, Fixnum, Array, Hash].each { |c|
-			refine(c) {
-				def to_bencode
-					Bencoder::encode(self)
-				end
-			}
-		}
-
 		private
 
 		module Bencodable # :nodoc:
@@ -71,6 +63,13 @@ module Bencoder
 				Bencoder::encode(self)
 			end
 		end
+
+		# Will be executed on `using Bencoder::MonkeyPatches`
+		[String, Symbol, Fixnum, Array, Hash].each { |c|
+			refine(c) {
+				include(Bencodable)
+			}
+		}
 	end
 
 	private

@@ -45,7 +45,7 @@ module Bencoder
 	end
 
 	# A module that holds monkey patches.
-	# You can activate them locally by `using MonkeyPatches`.
+	# You can activate them locally by `using Bencoder::MonkeyPatches`.
 	# Also contains method `apply` that extends only particular object.
 	module MonkeyPatches
 		# Adds method `to_bencode` to any given object.
@@ -66,9 +66,7 @@ module Bencoder
 
 		# Will be executed on `using Bencoder::MonkeyPatches`
 		[String, Symbol, Fixnum, Array, Hash].each { |c|
-			refine(c) {
-				include(Bencodable)
-			}
+			refine(c) { include(Bencodable) }
 		}
 	end
 

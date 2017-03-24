@@ -164,3 +164,4 @@ module Bencoder
 		return s.to_i
 	end
 end
+# vim:ts=4:sw=0

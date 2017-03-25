@@ -136,3 +136,4 @@ class TestBencoder < MiniTest::Test
 		assert_equal(Hash.new.to_bencode, "de")
 	end
 end
+# vim:ts=4:sw=0

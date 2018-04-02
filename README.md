@@ -1,5 +1,5 @@
 # bencoder
-Ruby gem that provides abilities to encode/decode [Bencoded strings](https://en.wikipedia.org/wiki/Bencode).
+Ruby gem for [Bencode](https://en.wikipedia.org/wiki/Bencode) data serialization.
 
 ## How to use
 1. Install
